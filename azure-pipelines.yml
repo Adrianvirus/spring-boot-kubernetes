@@ -19,13 +19,20 @@ steps:
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
 
-- task: SonarCloudAnalyze@1
-  displayName: 'SonarCloud'
+
+- task: SonarCloudPrepare@1
   inputs:
-    SonarCloud: 'adrianvirus2022'
+    SonarCloud: 'Sonar'
     organization: 'adrianvirus2022'
-    projectKey: 'adrianvirus2022'
-    projectName: 'Laboratorio_Final'
-    scannerMode: 'Maven'
+    scannerMode: 'Other'
+
+# - task: SonarCloudAnalyze@1
+#   displayName: 'SonarCloud'
+#   inputs:
+#     SonarCloud: 'adrianvirus2022'
+#     organization: 'adrianvirus2022'
+#     projectKey: 'adrianvirus2022'
+#     projectName: 'Laboratorio_Final'
+#     scannerMode: 'Maven'
 
 
