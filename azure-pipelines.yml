@@ -26,6 +26,6 @@ steps:
     organization: 'adrianvirus2022'
     projectKey: 'adrianvirus2022'
     projectName: 'Laboratorio_Final'
-    scannerMode: 'MSBuild'
+    scannerMode: 'Maven'
 
 
