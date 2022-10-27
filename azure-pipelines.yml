@@ -29,11 +29,6 @@ steps:
 
 - task: SonarCloudAnalyze@1
   displayName: 'SonarCloud Analyzer'
-  inputs:
-    SonarCloud: 'adrianvirus2022'
-    organization: 'adrianvirus2022'
-    projectKey: 'adrianvirus2022'
-    projectName: 'Laboratorio_Final'
-    scannerMode: 'Maven'
+
 
 
