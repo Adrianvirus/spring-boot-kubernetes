@@ -30,7 +30,7 @@ steps:
     mavenVersionOption: 'Default'
     mavenAuthenticateFeed: false
     effectivePomSkip: false
-    sonarQubeRunAnalysis: true
+    sonarQubeRunAnalysis: false
     sqMavenPluginVersionChoice: 'pom'
 - task: Gradle@3
   inputs:
