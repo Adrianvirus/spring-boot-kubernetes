@@ -18,3 +18,12 @@ steps:
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
+
+- task: SonarCloudPrepare@1
+  displayName: 'SonarCloud'
+  inputs:
+    SonarCloud: 'adrianvirus2022'
+    organization: 'adrianvirus2022'
+    projectKey: 'adrianvirus2022'
+    projectName: 'Laboratorio_Final'
+    
