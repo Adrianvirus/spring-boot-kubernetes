@@ -33,7 +33,7 @@ stages:
         publishJUnitResults: false
         javaHomeOption: 'JDKVersion'
         mavenVersionOption: 'Default'
-        goals: clean package -DskipTests
+        #goals: clean package -DskipTests
         mavenAuthenticateFeed: false
         effectivePomSkip: false
         sonarQubeRunAnalysis: true
