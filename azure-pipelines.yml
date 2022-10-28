@@ -95,12 +95,12 @@ stages:
     - task: Docker@2
       displayName: 'Registro de docker'
       inputs:
-        containerRegistry: 'Docker-Adrianvirus'
+        containerRegistry: 'docker_adrianvirus'
         command: 'login'
     - task: Docker@2
       displayName: 'Build and Push'
       inputs:
-        containerRegistry: 'Docker-Adrianvirus'
+        containerRegistry: 'docker_adrianvirus'
         repository: 'adrianvirus/laboratorio'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
