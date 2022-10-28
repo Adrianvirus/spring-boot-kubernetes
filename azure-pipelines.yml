@@ -57,7 +57,7 @@ stages:
 - stage: SCA
   jobs:
   - job: SCA
-    displayName: 'SCA'
+    displayName: 'Software Composition Analysis'
     steps:
     - task: Maven@3
       inputs:
@@ -75,4 +75,40 @@ stages:
         scanPath: '$(Build.ArtifactStagingDirectory)'
         format: 'HTML'
 
+################## Step CS ##################
+- stage: CS
+  jobs:
+  - job: CS
+    displayName: 'Container Security'
+    steps:  
+    - task: Maven@4
+      displayName: Build app - Maven
+      inputs:
+        mavenPomFile: 'pom.xml'
+        publishJUnitResults: true
+        testResultsFiles: '*/surefire-reports/TEST-.xml'
+        javaHomeOption: 'JDKVersion'
+        mavenVersionOption: 'Default'
+        mavenAuthenticateFeed: false
+        effectivePomSkip: false
+        sonarQubeRunAnalysis: false
+    - task: Docker@2
+      displayName: 'Registro de docker'
+      inputs:
+        containerRegistry: 'Docker-Adrianvirus'
+        command: 'login'
+    - task: Docker@2
+      displayName: 'Build and Push'
+      inputs:
+        containerRegistry: 'Docker-Adrianvirus'
+        repository: 'adrianvirus/laboratorio'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
+        tags: 'latest'
 
+    - script: |
+        sudo apt-get install -y rpm
+        wget https://github.com/aquasecurity/trivy/releases/download/v0.27.1/trivy_0.27.1_Linux-64bit.deb
+        sudo dpkg -i trivy_0.27.1_Linux-64bit.deb
+        trivy image adrianvirus/laboratorio:latest
+      displayName: 'Scanner de Imagen Docker'
