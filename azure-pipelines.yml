@@ -21,32 +21,16 @@ stages:
         SonarCloud: 'Sonar'
         organization: 'adrianvirus2022'
         scannerMode: 'Other'
-
     - task: Maven@4
       inputs:
         mavenPomFile: 'pom.xml'
-        publishJUnitResults: true
-        testResultsFiles: '*/surefire-reports/TEST-.xml'
+        publishJUnitResults: false
         javaHomeOption: 'JDKVersion'
         mavenVersionOption: 'Default'
+        mavenAuthenticateFeed: false
+        effectivePomSkip: false
         sonarQubeRunAnalysis: true
-
-    # - task: Maven@4
-    #   inputs:
-    #     mavenPomFile: 'pom.xml'
-    #     publishJUnitResults: false
-    #     javaHomeOption: 'JDKVersion'
-    #     mavenVersionOption: 'Default'
-    #     mavenAuthenticateFeed: false
-    #     effectivePomSkip: false
-    #     sonarQubeRunAnalysis: true
-    #     sqMavenPluginVersionChoice: 'latest'
-    #   env:
-    #     SONAR_TOKEN: $(SONAR_TOKEN)
-
-    - task: SonarCloudAnalyze@1
-      displayName: 'SonarCloud Analyzer'
-
+        sqMavenPluginVersionChoice: 'latest'
     - task: SonarCloudPublish@1
       displayName: 'SonarCloud Publish'
       inputs:
