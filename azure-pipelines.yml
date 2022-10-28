@@ -31,13 +31,16 @@ stages:
       inputs:
         mavenPomFile: 'pom.xml'
         publishJUnitResults: false
+        codeCoverageToolOption: 'Cobertura'
         javaHomeOption: 'JDKVersion'
         mavenVersionOption: 'Default'
-        #goals: clean package -DskipTests
         mavenAuthenticateFeed: false
         effectivePomSkip: false
         sonarQubeRunAnalysis: true
         sqMavenPluginVersionChoice: 'latest'
+        checkStyleRunAnalysis: true
+        pmdRunAnalysis: true
+        findBugsRunAnalysis: true
     - task: SonarCloudPublish@1
       displayName: 'SonarCloud Publish'
       inputs:
