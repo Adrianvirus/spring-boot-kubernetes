@@ -10,13 +10,14 @@ trigger:
 pool: Default
 
 stages:
+################## Step SAST ##################
 - stage: SAST
   jobs:
   - job: SAST
-    displayName: 'Oscar lamelo'
+    displayName: 'Static Analysis and Security Testing'
     steps:
-
     - task: SonarCloudPrepare@1
+      displayName: 'Preparacion Sonar Cloud'
       inputs:
         SonarCloud: 'Sonar'
         organization: 'adrianvirus2022'
@@ -28,6 +29,7 @@ stages:
             sonar.projectKey=adrianvirus2022
             sonar.projectName=adrianvirus2022
     - task: Maven@4
+      displayName: 'Analisis Codigo - Maven'
       inputs:
         mavenPomFile: 'pom.xml'
         publishJUnitResults: false
@@ -40,7 +42,37 @@ stages:
         checkStyleRunAnalysis: true
         pmdRunAnalysis: true
         findBugsRunAnalysis: true
+
+    - task: sonarcloud-buildbreaker@2
+      displayName: 'The Breaker'
+      inputs:
+        SonarCloud: 'Sonar'
+        organization: 'adrianvirus2022'
     - task: SonarCloudPublish@1
-      displayName: 'SonarCloud Publish'
+      displayName: 'Publicacion de reporte SonarCloud'
       inputs:
         pollingTimeoutSec: '300'
+    
+################## Step SCA ##################
+- stage: SCA
+  jobs:
+  - job: SCA
+    displayName: 'SCA'
+    steps:
+    - task: Maven@3
+      inputs:
+        mavenPomFile: 'pom.xml'
+        publishJUnitResults: true
+        testResultsFiles: '*/surefire-reports/TEST-.xml'
+        javaHomeOption: 'JDKVersion'
+        mavenVersionOption: 'Default'
+        mavenAuthenticateFeed: false
+        effectivePomSkip: false
+        sonarQubeRunAnalysis: false
+    - task: dependency-check-build-task@6
+      inputs:
+        projectName: 'spring-boot-kubernetes'
+        scanPath: '$(Build.ArtifactStagingDirectory)'
+        format: 'HTML'
+
+
