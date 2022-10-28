@@ -13,15 +13,14 @@ stages:
 - stage: SAST
   jobs:
   - job: SAST
-    displayName: 'Oscar chupalo'
+    displayName: 'Oscar lamelo'
     steps:
+
     - task: SonarCloudPrepare@1
-      displayName: 'SonarCloud Prepare'
       inputs:
         SonarCloud: 'Sonar'
         organization: 'adrianvirus2022'
-        projectKey: 'spring-boot-kubernetes'
-        projectName: 'adrianvirus2022'
+        scannerMode: 'Other'
 
     - task: Maven@4
       inputs:
