@@ -21,12 +21,19 @@ stages:
         SonarCloud: 'Sonar'
         organization: 'adrianvirus2022'
         scannerMode: 'Other'
+        extraProperties: |
+            # Additional properties that will be passed to the scanner,
+            # Put one key=value per line, example:
+            # sonar.exclusions=**/*.bin
+            sonar.projectKey=adrianvirus2022
+            sonar.projectName=adrianvirus2022
     - task: Maven@4
       inputs:
         mavenPomFile: 'pom.xml'
         publishJUnitResults: false
         javaHomeOption: 'JDKVersion'
         mavenVersionOption: 'Default'
+        goals: clean package -DskipTests
         mavenAuthenticateFeed: false
         effectivePomSkip: false
         sonarQubeRunAnalysis: true
