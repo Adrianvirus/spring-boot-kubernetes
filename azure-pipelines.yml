@@ -12,17 +12,17 @@ pool: Default
 #   vmImage: ubuntu-latest
 
 steps:
-- task: Maven@4
-  inputs:
-    mavenPomFile: 'pom.xml'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    javaHomeOption: 'JDKVersion'
-    mavenVersionOption: 'Default'
-    mavenAuthenticateFeed: false
-    effectivePomSkip: false
-    sonarQubeRunAnalysis: false
-    sqMavenPluginVersionChoice: 'pom'
+# - task: Maven@4
+#   inputs:
+#     mavenPomFile: 'pom.xml'
+#     publishJUnitResults: true
+#     testResultsFiles: '**/surefire-reports/TEST-*.xml'
+#     javaHomeOption: 'JDKVersion'
+#     mavenVersionOption: 'Default'
+#     mavenAuthenticateFeed: false
+#     effectivePomSkip: false
+#     sonarQubeRunAnalysis: false
+#     sqMavenPluginVersionChoice: 'pom'
 
 - task: SonarCloudPrepare@1
   displayName: 'SonarCloud Prepare'
@@ -34,11 +34,22 @@ steps:
 - task: Maven@4
   inputs:
     mavenPomFile: 'pom.xml'
-    publishJUnitResults: true
-    testResultsFiles: '*/surefire-reports/TEST-.xml'
+    publishJUnitResults: false
     javaHomeOption: 'JDKVersion'
     mavenVersionOption: 'Default'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
     sonarQubeRunAnalysis: true
+    sqMavenPluginVersionChoice: 'latest'
+
+# - task: Maven@4
+#   inputs:
+#     mavenPomFile: 'pom.xml'
+#     publishJUnitResults: true
+#     testResultsFiles: '*/surefire-reports/TEST-.xml'
+#     javaHomeOption: 'JDKVersion'
+#     mavenVersionOption: 'Default'
+#     sonarQubeRunAnalysis: true
 - task: SonarCloudAnalyze@1
   displayName: 'SonarCloud Analyzer'
 
