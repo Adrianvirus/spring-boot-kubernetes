@@ -8,54 +8,47 @@ trigger:
 - master
 
 pool: Default
-# pool:
-#   vmImage: ubuntu-latest
 
-steps:
-# - task: Maven@4
-#   inputs:
-#     mavenPomFile: 'pom.xml'
-#     publishJUnitResults: true
-#     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-#     javaHomeOption: 'JDKVersion'
-#     mavenVersionOption: 'Default'
-#     mavenAuthenticateFeed: false
-#     effectivePomSkip: false
-#     sonarQubeRunAnalysis: false
-#     sqMavenPluginVersionChoice: 'pom'
+stages:
+- stage: SAST
+  jobs:
+  - job: SAST
+    displayName: 'Oscar chupalo'
+    steps:
+    - task: SonarCloudPrepare@1
+      displayName: 'SonarCloud Prepare'
+      inputs:
+        SonarCloud: 'Sonar'
+        organization: 'adrianvirus2022'
+        projectKey: 'spring-boot-kubernetes'
+        projectName: 'adrianvirus2022'
 
-- task: SonarCloudPrepare@1
-  displayName: 'SonarCloud Prepare'
-  inputs:
-    SonarCloud: 'Sonar'
-    organization: 'adrianvirus2022'
-    scannerMode: 'Other'
 
-- task: Maven@4
-  inputs:
-    mavenPomFile: 'pom.xml'
-    publishJUnitResults: false
-    javaHomeOption: 'JDKVersion'
-    mavenVersionOption: 'Default'
-    mavenAuthenticateFeed: false
-    effectivePomSkip: false
-    sonarQubeRunAnalysis: true
-    sqMavenPluginVersionChoice: 'latest'
-  env:
-    SONAR_TOKEN: $(SONAR_TOKEN)
+    - task: Maven@4
+      inputs:
+        mavenPomFile: 'pom.xml'
+        publishJUnitResults: false
+        javaHomeOption: 'JDKVersion'
+        mavenVersionOption: 'Default'
+        mavenAuthenticateFeed: false
+        effectivePomSkip: false
+        sonarQubeRunAnalysis: true
+        sqMavenPluginVersionChoice: 'latest'
+      env:
+        SONAR_TOKEN: $(SONAR_TOKEN)
 
-# - task: Maven@4
-#   inputs:
-#     mavenPomFile: 'pom.xml'
-#     publishJUnitResults: true
-#     testResultsFiles: '*/surefire-reports/TEST-.xml'
-#     javaHomeOption: 'JDKVersion'
-#     mavenVersionOption: 'Default'
-#     sonarQubeRunAnalysis: true
-- task: SonarCloudAnalyze@1
-  displayName: 'SonarCloud Analyzer'
+    # - task: Maven@4
+    #   inputs:
+    #     mavenPomFile: 'pom.xml'
+    #     publishJUnitResults: true
+    #     testResultsFiles: '*/surefire-reports/TEST-.xml'
+    #     javaHomeOption: 'JDKVersion'
+    #     mavenVersionOption: 'Default'
+    #     sonarQubeRunAnalysis: true
+    - task: SonarCloudAnalyze@1
+      displayName: 'SonarCloud Analyzer'
 
-- task: SonarCloudPublish@1
-  displayName: 'SonarCloud Publish'
-  inputs:
-    pollingTimeoutSec: '300'
+    - task: SonarCloudPublish@1
+      displayName: 'SonarCloud Publish'
+      inputs:
+        pollingTimeoutSec: '300'
