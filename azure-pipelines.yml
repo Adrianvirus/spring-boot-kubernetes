@@ -41,6 +41,8 @@ steps:
     effectivePomSkip: false
     sonarQubeRunAnalysis: true
     sqMavenPluginVersionChoice: 'latest'
+  env:
+    SONAR_TOKEN: $(SONAR_TOKEN)
 
 # - task: Maven@4
 #   inputs:
