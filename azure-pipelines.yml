@@ -23,28 +23,28 @@ stages:
         projectKey: 'spring-boot-kubernetes'
         projectName: 'adrianvirus2022'
 
-
     - task: Maven@4
       inputs:
         mavenPomFile: 'pom.xml'
-        publishJUnitResults: false
+        publishJUnitResults: true
+        testResultsFiles: '*/surefire-reports/TEST-.xml'
         javaHomeOption: 'JDKVersion'
         mavenVersionOption: 'Default'
-        mavenAuthenticateFeed: false
-        effectivePomSkip: false
         sonarQubeRunAnalysis: true
-        sqMavenPluginVersionChoice: 'latest'
-      env:
-        SONAR_TOKEN: $(SONAR_TOKEN)
 
     # - task: Maven@4
     #   inputs:
     #     mavenPomFile: 'pom.xml'
-    #     publishJUnitResults: true
-    #     testResultsFiles: '*/surefire-reports/TEST-.xml'
+    #     publishJUnitResults: false
     #     javaHomeOption: 'JDKVersion'
     #     mavenVersionOption: 'Default'
+    #     mavenAuthenticateFeed: false
+    #     effectivePomSkip: false
     #     sonarQubeRunAnalysis: true
+    #     sqMavenPluginVersionChoice: 'latest'
+    #   env:
+    #     SONAR_TOKEN: $(SONAR_TOKEN)
+
     - task: SonarCloudAnalyze@1
       displayName: 'SonarCloud Analyzer'
 
