@@ -74,9 +74,9 @@ stages:
     - task: dependency-check-build-task@6
       inputs:
         projectName: 'spring-boot-kubernetes'
-        scanPath: '/home/ubuntu/agent_yan/_work/**/*.jar'
-        failOnCVSS: 7 # Fail the build if vulnerabilities with CVSS score 7.0-8.9 (High)
+        scanPath: '/home/ubuntu/agent_yan/**/*.jar'
         format: 'HTML'
+        failOnCVSS: '7'
 
 ################## Step CS ##################
 - stage: CS
