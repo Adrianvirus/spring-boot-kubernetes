@@ -33,11 +33,13 @@ stages:
       inputs:
         mavenPomFile: 'pom.xml'
         publishJUnitResults: false
+        codeCoverageToolOption: 'JaCoCo'
         javaHomeOption: 'JDKVersion'
         mavenVersionOption: 'Default'
         mavenAuthenticateFeed: false
         effectivePomSkip: false
         sonarQubeRunAnalysis: true
+        isJacocoCoverageReportXML: true
         sqMavenPluginVersionChoice: 'latest'
         checkStyleRunAnalysis: true
         pmdRunAnalysis: true
